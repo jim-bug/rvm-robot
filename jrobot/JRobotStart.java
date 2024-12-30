@@ -133,7 +133,7 @@ public class JRobotStart extends JFrame implements ActionListener {
         this.argsJRobot[2] = this.portfield.getText();
       } 
       dispose();
-      // startJRobot(this, this.argsJRobot); LOOK THIS :)
+      startJRobot(this, this.argsJRobot); // LOOK THIS :)
     } 
   }
   
@@ -202,6 +202,6 @@ public class JRobotStart extends JFrame implements ActionListener {
   public static void startJRobot(JRobotStart jrs, String[] args) {
     jrs = null;
     // System.out.println(args[1]);
-    // new JRobot(args);    LOOK THIS :)
+    new JRobot(args);    // LOOK THIS :)
   }
 }
