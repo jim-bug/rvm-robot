@@ -24,7 +24,9 @@ public class JRobotStart extends JFrame implements ActionListener {
   JTextField ipfield = null;
   
   JTextField portfield = null;
-  JTextField portNameField = null;
+
+  JTextField usbPortName = null;
+  
   JPanel p_selected;
   
   String[] argsJRobot;
@@ -43,7 +45,7 @@ public class JRobotStart extends JFrame implements ActionListener {
   
   String testText = "\n You will run JRobot simulating\n the communication with a\n RVM1 robot";
   
-  String localText = "\n JRobot will try to connect to a\n RVM1 robot connected to\n your computer\nPlease you write the USB port name.\nWhere RVM1 robot is connected.";
+  String localText = "\n JRobot will try to connect to a\n RVM1 robot connected to\n your computer";
   
   String remoteText = "\n Another computer running a\n RVM1 server will receive the\n commands this application\n will send";
   
@@ -124,8 +126,7 @@ public class JRobotStart extends JFrame implements ActionListener {
       } else if (this.localm) {
         this.argsJRobot = new String[2];
         this.argsJRobot[0] = "l";
-        this.argsJRobot[1] = portNameField.getText();     // usb port name
-        System.out.println(argsJRobot[1]);
+        this.argsJRobot[1] = this.usbPortName.getText();
       } else if (this.remotem) {
         this.argsJRobot = new String[3];
         this.argsJRobot[0] = "r";
@@ -133,7 +134,7 @@ public class JRobotStart extends JFrame implements ActionListener {
         this.argsJRobot[2] = this.portfield.getText();
       } 
       dispose();
-      startJRobot(this, this.argsJRobot); // LOOK THIS :)
+      startJRobot(this, this.argsJRobot);
     } 
   }
   
@@ -143,53 +144,57 @@ public class JRobotStart extends JFrame implements ActionListener {
       JTextArea ta1 = null;
       JRobotStart.this.p_selected.removeAll();
       if (command.equals(JRobotStart.this.testmode)) {
-          JRobotStart.this.testm = true;
-          JRobotStart.this.localm = false;
-          JRobotStart.this.remotem = false;
-          ta1 = new JTextArea(JRobotStart.this.testText, 5, 30);
-          ta1.setEditable(false);
-          JRobotStart.this.p_selected.add(ta1, "Center");
-          JRobotStart.this.p_selected.doLayout();
+        JRobotStart.this.testm = true;
+        JRobotStart.this.localm = false;
+        JRobotStart.this.remotem = false;
+        ta1 = new JTextArea(JRobotStart.this.testText, 5, 30);
+        ta1.setEditable(false);
+        JRobotStart.this.p_selected.add(ta1, "Center");
+        JRobotStart.this.p_selected.doLayout();
       } else if (command.equals(JRobotStart.this.localmode)) {
-          JRobotStart.this.localm = true;
-          JRobotStart.this.testm = false;
-          JRobotStart.this.remotem = false;
 
-          JPanel inputTextPanel = new JPanel(new BorderLayout());
-          JPanel inputPanel = new JPanel(new BorderLayout());
-          inputTextPanel.add(new JLabel("USB Port Name"), "North");
-          portNameField = new JTextField("ttyUSB0", 30);
+        JRobotStart.this.localm = true;
+        JRobotStart.this.testm = false;
+        JRobotStart.this.remotem = false;
+        ta1 = new JTextArea(JRobotStart.this.localText, 5, 30);
+        ta1.setEditable(false);
+        JRobotStart.this.p_selected.add(ta1, "Center");
+        JRobotStart.this.p_selected.doLayout();
 
-          ta1 = new JTextArea(JRobotStart.this.localText, 5, 30);
-          ta1.setEditable(false);
-          inputTextPanel.add(inputPanel, "Center");
-          p_selected.add(ta1, "Center");
-          inputPanel.add(portNameField, "Center");
-          p_selected.add(inputTextPanel, "South");
-          JRobotStart.this.p_selected.doLayout();
-          inputTextPanel.doLayout();
-          inputPanel.doLayout();
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BorderLayout());
+        p1.add(new JLabel("USB Port Name"), "North");
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BorderLayout());
+        JRobotStart.this.usbPortName = new JTextField("ttyUSB0", 30);
+        p2.add(JRobotStart.this.usbPortName, "Center");
+        p1.add(p2, "Center");
+        JRobotStart.this.p_selected.add(p1, "South");
+        JRobotStart.this.p_selected.doLayout();
+        p1.doLayout();
+        p2.doLayout();
+
       } else if (command.equals(JRobotStart.this.remotemode)) {
-          JRobotStart.this.remotem = true;
-          JRobotStart.this.testm = false;
-          JRobotStart.this.localm = false;
-          ta1 = new JTextArea(JRobotStart.this.remoteText, 5, 30);
-          ta1.setEditable(false);
-          JRobotStart.this.p_selected.add(ta1, "Center");
-          JPanel p1 = new JPanel();
-          p1.setLayout(new BorderLayout());
-          p1.add(new JLabel("IP or Name  +  Port Number"), "North");
-          JPanel p2 = new JPanel();
-          p2.setLayout(new BorderLayout());
-          JRobotStart.this.ipfield = new JTextField("129.194.71.23", 30);
-          JRobotStart.this.portfield = new JTextField("8888", 5);
-          p2.add(JRobotStart.this.ipfield, "Center");
-          p2.add(JRobotStart.this.portfield, "East");
-          p1.add(p2, "Center");
-          JRobotStart.this.p_selected.add(p1, "South");
-          JRobotStart.this.p_selected.doLayout();
-          p1.doLayout();
-          p2.doLayout();
+        JRobotStart.this.remotem = true;
+        JRobotStart.this.testm = false;
+        JRobotStart.this.localm = false;
+        ta1 = new JTextArea(JRobotStart.this.remoteText, 5, 30);
+        ta1.setEditable(false);
+        JRobotStart.this.p_selected.add(ta1, "Center");
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BorderLayout());
+        p1.add(new JLabel("IP or Name  +  Port Number"), "North");
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BorderLayout());
+        JRobotStart.this.ipfield = new JTextField("129.194.71.23", 30);
+        JRobotStart.this.portfield = new JTextField("8888", 5);
+        p2.add(JRobotStart.this.ipfield, "Center");
+        p2.add(JRobotStart.this.portfield, "East");
+        p1.add(p2, "Center");
+        JRobotStart.this.p_selected.add(p1, "South");
+        JRobotStart.this.p_selected.doLayout();
+        p1.doLayout();
+        p2.doLayout();
       } 
     }
   }
@@ -201,7 +206,7 @@ public class JRobotStart extends JFrame implements ActionListener {
   
   public static void startJRobot(JRobotStart jrs, String[] args) {
     jrs = null;
-    // System.out.println(args[1]);
-    new JRobot(args);    // LOOK THIS :)
+    System.out.println("Port Name: " + args[1]);
+    new JRobot(args);
   }
 }

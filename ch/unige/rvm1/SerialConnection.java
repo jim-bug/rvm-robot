@@ -4,20 +4,22 @@
  * Time: 3:08:47 PM
  */
 package ch.unige.rvm1;
-
-/*import javax.comm.CommPortIdentifier;
+/*
+import javax.comm.CommPortIdentifier;
 import javax.comm.SerialPort;
 import javax.comm.SerialPortEvent;
 import javax.comm.SerialPortEventListener;
+
 */
 import java.io.IOException;
-import gnu.io.*;
+import gnu.io.*;        // temporary fix for RXTX
+
 
 public class SerialConnection extends Connection {
 
     public SerialConnection(String portName, String appName) throws RVM1Exception {
         try {
-            _portId = CommPortIdentifier.getPortIdentifier("ttyUSB0");
+            _portId = CommPortIdentifier.getPortIdentifier(portName);
             _serialPort = (SerialPort) _portId.open(appName, 2000);
             _outputStream = _serialPort.getOutputStream();
             _serialPort.setSerialPortParams(9600, SerialPort.DATABITS_7,
