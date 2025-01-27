@@ -78,7 +78,7 @@ public class JRobot extends JFrame implements ActionListener {
   public JRobot(String[] args) {
     super("JRobot");
     TestConnection testConnection;
-    SocketConnection socketConnection = null;
+    SocketConnection socketConnection;
     this.p1 = null;
     this.p_sliders = null;
     this.joystickButton = null;
@@ -171,11 +171,11 @@ public class JRobot extends JFrame implements ActionListener {
     char connectType = args[0].charAt(0);
     switch (connectType) {
       case 's':
-        testConnection = new TestConnection(1000);
+        comm = new TestConnection(1000);
         break;
       case 'l':
         try {
-          SerialConnection serialConnection = new SerialConnection(args[1], "JRobot");
+           comm = new SerialConnection(args[1], "JRobot");
           System.out.println("Status Connection: " + args[1] + " OK");
         } catch (RVM1Exception e) {
             System.out.println("Status Connection: " + args[1] + " BAD");
@@ -191,7 +191,7 @@ public class JRobot extends JFrame implements ActionListener {
         try {
           InetAddress remoteRVM1 = InetAddress.getByName(args[1]);
           int portNumber = Integer.parseInt(args[2]);
-          socketConnection = new SocketConnection(remoteRVM1, portNumber);
+          comm = new SocketConnection(remoteRVM1, portNumber);
         } catch (Exception e) {
           errorMessage("Can't connect to supposed RVM1 server");
           System.exit(0);
@@ -202,7 +202,7 @@ public class JRobot extends JFrame implements ActionListener {
         System.exit(0);
         break;
     } 
-    this.rvm1 = new AdvancedRVM1((Connection)socketConnection);
+    this.rvm1 = new AdvancedRVM1(comm); // comm
     this.rvm1.getCommandQueue().addCommandQueueListener(new CommandQueueListener() {
           public void executed(String command) {
             String action = "Execution: ";
