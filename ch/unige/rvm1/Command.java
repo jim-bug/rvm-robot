@@ -121,7 +121,8 @@ abstract class Command {
     }
 
     protected void sendCommand() {
-        _state.getConnection().send(toString());
+        // _state.getConnection().send(toString());        // probabile modifica
+        _state.getConnection().send(toString() + "\r\n");        // probabile modifica
     }
 
     protected boolean inRange(float val, float min, float max) {
@@ -157,7 +158,7 @@ abstract class Command {
     protected static RVM1InternalState _state = null;
     protected static RVM1InternalState _backupState = null;
     protected static boolean _simulation = false;
-    protected static ArrayList _listeners = new ArrayList(2);
+    protected static ArrayList<CommandListener> _listeners = new ArrayList<CommandListener>(2);
     protected String _name;
     protected static Object _lock = new Object();
 }
