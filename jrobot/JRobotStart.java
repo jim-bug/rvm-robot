@@ -166,7 +166,7 @@ public class JRobotStart extends JFrame implements ActionListener {
         p1.add(new JLabel("USB Port Name"), "North");
         JPanel p2 = new JPanel();
         p2.setLayout(new BorderLayout());
-        JRobotStart.this.usbPortName = new JTextField("ttyUSB0", 30);
+        JRobotStart.this.usbPortName = new JTextField("/dev/ttyUSB3", 30);
         p2.add(JRobotStart.this.usbPortName, "Center");
         p1.add(p2, "Center");
         JRobotStart.this.p_selected.add(p1, "South");

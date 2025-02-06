@@ -122,7 +122,11 @@ abstract class Command {
 
     protected void sendCommand() {
         // _state.getConnection().send(toString());        // probabile modifica
-        _state.getConnection().send(toString() + "\r\n");        // probabile modifica
+        String command = toString() + "\r\n";
+        for(int i = 0; i < command.length(); i++){
+            System.out.println(command.charAt(i) + " : " + (int)command.charAt(i));
+        }
+        _state.getConnection().send(command);        // probabile modifica
     }
 
     protected boolean inRange(float val, float min, float max) {

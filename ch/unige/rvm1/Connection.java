@@ -23,8 +23,9 @@ public abstract class Connection {
     }
 
     protected void sendString(String command) throws IOException {
+    
         _outputStream.write(command.getBytes());
-        _outputStream.write('\n');
+        // _outputStream.write('\n');
     }
 
     public void close() {
