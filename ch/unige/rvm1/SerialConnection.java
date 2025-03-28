@@ -24,7 +24,7 @@ public class SerialConnection extends Connection {
             _outputStream = _serialPort.getOutputStream();
             _serialPort.setSerialPortParams(9600, SerialPort.DATABITS_7,
                     SerialPort.STOPBITS_2, SerialPort.PARITY_EVEN);
-
+            _serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_NONE);
             _serialPort.addEventListener(new SerialPortEventListener() {
                 public void serialEvent(SerialPortEvent event) {
                     if (event.getEventType() == SerialPortEvent.CD &&
